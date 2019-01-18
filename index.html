@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+<h2>Tính Mod</h2>
+<div class="tinh_mod">
+<input type="text" id="txt_mod_a">x<input type="text" id="txt_mod_ax"> mũ <input type="text" id="txt_mod_mu"> mod <input type="text" id="txt_mod_b"> <button onclick="aModb()">Tính</button>
+<br><span id="kq_mod"></span>
+</div>
+<h2>Tính Modulo nghịch ảo</h2>
+<div class="tinh_modulo">
+<input type="text" id="txt_modulo_a">^-1 mod <input type="text" id="txt_modulo_b"> <button onclick="modulo()">Tính</button>
+<br><span id="kq_modulo"></span>
+</div>
+</body>
+<script>
+    function gcdx(a, b) {
+        var x2=1;var x1=0;var y2=0;var y1=1;
+        while(b>0){
+            var q = Math.floor(a/b);
+            var r= a%b;
+            var x= x2-q*x1;
+            var y= y2-q*y1;
+            a=b;
+            b=r;
+            x2=x1;
+            x1=x;
+            y2=y1;
+            y1=y;
+        }
+        return "d="+a+";y2="+y2+";x2="+x2;
+    }
+    function aModb(){
+        var ax=document.getElementById("txt_mod_ax").value;
+        var a=document.getElementById("txt_mod_a").value;
+        var b=document.getElementById("txt_mod_b").value;
+        var mu=document.getElementById("txt_mod_mu").value;
+        if(mu == "") mu = 1;
+        if(a == "") a = 1;
+        var c =(a*Math.pow(ax, mu))%b;
+        document.getElementById("kq_mod").innerHTML= c;
+    }
+    function modulo(){
+        var a=document.getElementById("txt_modulo_a").value;
+        var b=document.getElementById("txt_modulo_b").value;
+        var gcd = gcdx(b,a);
+        document.getElementById("kq_modulo").innerHTML= gcd;
+    }
+
+</script>
+</html>
