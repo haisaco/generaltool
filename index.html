@@ -13,11 +13,13 @@
 <div class="tinh_modulo">
 <input type="text" id="txt_modulo_a">^-1 mod <input type="text" id="txt_modulo_b"> <button onclick="modulo()">Tính</button>
 <br><span id="kq_modulo"></span>
+<div id="module_data_table"></div>
 </div>
 </body>
 <script>
     function gcdx(a, b) {
         var x2=1;var x1=0;var y2=0;var y1=1;
+        var _dom = renderRow(a,b,x2,x1,y2,y1,null,null,null,null);
         while(b>0){
             var q = Math.floor(a/b);
             var r= a%b;
@@ -29,8 +31,9 @@
             x1=x;
             y2=y1;
             y1=y;
+            _dom += renderRow(a,b,x2,x1,y2,y1,q,r,x,y);
         }
-        return "d="+a+";y2="+y2+";x2="+x2;
+        drawTable(_dom);
     }
     function aModb(){
         var ax=document.getElementById("txt_mod_ax").value;
@@ -45,8 +48,42 @@
     function modulo(){
         var a=document.getElementById("txt_modulo_a").value;
         var b=document.getElementById("txt_modulo_b").value;
-        var gcd = gcdx(b,a);
-        document.getElementById("kq_modulo").innerHTML= gcd;
+        gcdx(b,a);
+        //var gcd = gcdx(b,a);
+        //document.getElementById("kq_modulo").innerHTML= gcd;
+    }
+    function renderRow(a,b,x2,x1,y2,y1,q,r,x,y){
+        var dom=`<tr>
+                    <td>${a}</td>
+                    <td>${b}</td>
+                    <td>${x2}</td>
+                    <td>${x1}</td>
+                    <td>${y2}</td>
+                    <td>${y1}</td>
+                    <td>${q}</td>
+                    <td>${r}</td>
+                    <td>${x}</td>
+                    <td>${y}</td>
+                </tr>`
+        return dom;
+    }
+    function drawTable(dataRow){
+        var dom=`<table border="1">
+                    <tr>
+                        <th>a</th>
+                        <th>b</th>
+                        <th>x2</th>
+                        <th>x1</th>
+                        <th>y2</th>
+                        <th>y1</th>
+                        <th>q</th>
+                        <th>r</th>
+                        <th>x</th>
+                        <th>y</th>
+                    <tr>
+                    ${dataRow}
+                </table>`
+        document.getElementById("module_data_table").innerHTML = dom;
     }
 
 </script>
